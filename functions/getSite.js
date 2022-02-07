@@ -6,12 +6,12 @@ const headers = {
   "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
 };
 exports.handler = async function (event, context) {
-  if (event.httpMethod === "OPTIONS") {
-    return {
-      statusCode: 200,
-      headers,
-    };
-  }
+  // if (event.httpMethod === "OPTIONS") {
+  //   return {
+  //     statusCode: 200,
+  //     headers,
+  //   };
+  // }
   let title = "No Title Grabbed";
   try {
     await axios
