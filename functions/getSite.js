@@ -1,18 +1,15 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 require("dotenv").config();
+
 const headers = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
 };
+
 exports.handler = async function (event, context) {
-  const { ticker } = JSON.parse(event.body);
-  // if (event.httpMethod === "OPTIONS") {
-  //   return {
-  //     statusCode: 200,
-  //     headers,
-  //   };
-  // }
+  const { ticker } = JSON.parse(event.queryStringParameters);
+
   let title = "No Title Grabbed";
   try {
     await axios
@@ -29,7 +26,7 @@ exports.handler = async function (event, context) {
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ title }),
+      body: JSON.stringify({ title, ticker }),
     };
   }
 };
