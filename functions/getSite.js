@@ -16,6 +16,7 @@ exports.handler = async function (event, context) {
     ticker: ticker.toUpperCase(),
     dataAvailable: false,
     createdOn: new Date().toISOString(),
+    url: `https://www.tipranks.com/stocks/${ticker}/forecast`,
   };
 
   try {
