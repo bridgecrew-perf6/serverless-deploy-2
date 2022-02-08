@@ -41,7 +41,14 @@ exports.handler = async function (event, context) {
             .split(`${potential.text()}`)[0];
           tickerData.percentage = potential.text().split("(")[1].split(")")[0];
         } else {
-          tickerData.dataAvailable = false;
+          tickerData = {
+            ...tickerData,
+            ...{
+              price: "No Price Target",
+              ratings: { total: "0", consensus: "No Ratings" },
+              dataAvailable: false,
+            },
+          };
         }
       })
       .catch((err) => console.log(err));
