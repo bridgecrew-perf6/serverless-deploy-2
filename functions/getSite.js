@@ -8,8 +8,7 @@ const headers = {
 };
 
 exports.handler = async function (event, context) {
-  const { ticker } = JSON.parse(event.queryStringParameters);
-
+  let { ticker } = event.queryStringParameters;
   let title = "No Title Grabbed";
   try {
     await axios
