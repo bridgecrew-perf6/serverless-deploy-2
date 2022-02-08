@@ -9,14 +9,39 @@ const headers = {
 
 exports.handler = async function (event, context) {
   let { ticker } = event.queryStringParameters;
-  let title = "No Title Grabbed";
+  let tickerData = {
+    price: "",
+    percentage: "",
+    ratings: { total: "", consensus: "" },
+    ticker: ticker.toUpperCase(),
+    dataAvailable: false,
+    createdOn: new Date().toISOString(),
+  };
+
   try {
     await axios
       .get(`https://www.tipranks.com/stocks/${ticker}/forecast`)
       .then((res) => {
         const html = res.data;
         const $ = cheerio.load(html);
-        title = $("h1", html).text();
+        let potential = $("div.displayflex.fontSize10", html);
+        if (potential.text()) {
+          tickerData.ratings.consensus = $(
+            "span.colorpale.fonth4_bold.aligncenter.w12"
+          ).text();
+          tickerData.ratings.total = $("g.override.fontSize6")
+            .children()
+            .first()
+            .text();
+          tickerData.dataAvailable = true;
+          tickerData.price = potential
+            .parent()
+            .text()
+            .split(`${potential.text()}`)[0];
+          tickerData.percentage = potential.text().split("(")[1].split(")")[0];
+        } else {
+          tickerData.dataAvailable = false;
+        }
       })
       .catch((err) => console.log(err));
   } catch (error) {
@@ -25,7 +50,7 @@ exports.handler = async function (event, context) {
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ title, ticker }),
+      body: JSON.stringify(tickerData),
     };
   }
 };
