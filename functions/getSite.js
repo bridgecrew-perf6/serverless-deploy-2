@@ -28,7 +28,7 @@ exports.handler = async function (event, context) {
         let potential = $("div.displayflex.fontSize10", html);
         if (potential.text()) {
           tickerData.ratings.consensus = $(
-            "span.colorpale.fonth4_bold.aligncenter.w12"
+            "span.fonth4_bold.aligncenter.w12"
           ).text();
           tickerData.ratings.total = $("g.override.fontSize6")
             .children()
