@@ -47,6 +47,7 @@ exports.handler = async function (event, context) {
               price: "No Price Target",
               ratings: { total: "0", consensus: "No Ratings" },
               dataAvailable: false,
+              percentage: "--",
             },
           };
         }
