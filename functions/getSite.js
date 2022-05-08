@@ -8,7 +8,6 @@ const headers = {
 };
 
 exports.handler = async function (event, context) {
-  console.log("event", event, "head", console.log(headers), "context", context);
   let { ticker } = event.queryStringParameters;
   let tickerData = {
     price: "",
